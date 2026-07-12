@@ -1,10 +1,24 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Logger, Module, OnModuleInit } from '@nestjs/common';
+import { DATASOURCES } from './app.connections';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    // --- //
+  ],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  onModuleInit() {
+    for (let index = 0; index < DATASOURCES.length; index++) {
+      const el = DATASOURCES[index];
+      const ctxForHumans = el.ctx.getForHumans();
+      el.ds
+        .initialize()
+        .then(() => Logger.log(`${ctxForHumans} inicia correctamente`))
+        .catch((err) =>
+          Logger.log(
+            `${ctxForHumans} no pudo iniciar, detalle: (${err.message})`,
+          ),
+        );
+    }
+  }
+}

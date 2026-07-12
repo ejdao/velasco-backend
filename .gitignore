@@ -2,6 +2,11 @@
 /dist
 /node_modules
 /build
+/rsa
+/ignored
+/public
+/removed
+/temp
 
 # Logs
 logs
