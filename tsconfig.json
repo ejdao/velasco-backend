@@ -21,10 +21,12 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
+      "@authorities/*": ["./src/@authorities/*"],
       "@env": ["./src/app.environments"],
       "@common/*": ["./src/@common/*"],
+      "@ctypes/*": ["./src/@types/*"],
       "@orm/*": ["./src/@orm/*"],
-      "@ctypes/*": ["./src/@types/*"]
+      "@seg/*": ["./src/apps/seguridad/*"]
     }
   }
 }

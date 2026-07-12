@@ -14,8 +14,7 @@ const trim = (text: string) => {
 };
 
 const capitalize = (text: string) => {
-  if (text && typeof text === 'string')
-    return `${text[0].toUpperCase()}${text.slice(1)}`;
+  if (text && typeof text === 'string') return `${text[0].toUpperCase()}${text.slice(1)}`;
   else return text;
 };
 
@@ -58,18 +57,15 @@ const formatForJson = (text: string) => {
 
 const enumToString = (object: object) => {
   return Object.keys(object)
-    .map((key) => object[key])
-    .filter((value) => typeof value === 'string') as string[];
+    .map(key => object[key])
+    .filter(value => typeof value === 'string') as string[];
 };
 
-const addEllipsis = (st: string, length: number) => {
+const addEllipsis = (st: string | undefined, length: number) => {
+  if (!st) return st;
   const existValue = [undefined, null].indexOf(st as any) >= 0;
   const overLength = st.length > length;
-  return existValue
-    ? st
-    : overLength
-      ? `${st.slice(0, length - 3).trim()}...`
-      : st;
+  return existValue ? st : overLength ? `${st.slice(0, length - 3).trim()}...` : st;
 };
 
 export const STRING_UTILITIES = {

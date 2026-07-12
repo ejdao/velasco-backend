@@ -14,7 +14,7 @@ const encrypt = async (password: string) => {
   return result;
 };
 
-export const CYPTO_SERVICES = {
+export const CRYPTO_SERVICES = {
   decryptValueFromFront,
   compare,
   encrypt,
