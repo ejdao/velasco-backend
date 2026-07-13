@@ -1,15 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsOptional, IsString } from 'class-validator';
 import { STRING_UTILITIES } from '@common/application/services';
-import * as contextTypes from '@common/domain/types';
+import { CTM_CONTEXTS, CtmContexts, type CtmContextCode } from '@common/domain/types';
 
 export class FetchEnterprisesDto {
   @IsOptional()
-  @ApiProperty({ example: contextTypes.CTM_CONTEXTS.DEFAULT.getCode() })
-  @IsEnum(contextTypes.CtmContexts, {
-    message: `${STRING_UTILITIES.enumToString(contextTypes.CtmContexts)}`,
+  @ApiProperty({ example: CTM_CONTEXTS.DEFAULT.getCode() })
+  @IsEnum(CtmContexts, {
+    message: `${STRING_UTILITIES.enumToString(CtmContexts)}`,
   })
-  contextCode!: contextTypes.CtmContextCode;
+  contextCode!: CtmContextCode;
 
   @ApiProperty({ example: 'admin@velascoalq.com' })
   @IsString()
@@ -21,11 +21,11 @@ export class FetchEnterprisesDto {
 }
 
 export class LoginUsuarioDto {
-  @ApiProperty({ example: contextTypes.CTM_CONTEXTS.DEFAULT.getCode() })
-  @IsEnum(contextTypes.CtmContexts, {
-    message: `${STRING_UTILITIES.enumToString(contextTypes.CtmContexts)}`,
+  @ApiProperty({ example: CTM_CONTEXTS.DEFAULT.getCode() })
+  @IsEnum(CtmContexts, {
+    message: `${STRING_UTILITIES.enumToString(CtmContexts)}`,
   })
-  contextCode!: contextTypes.CtmContextCode;
+  contextCode!: CtmContextCode;
 
   @ApiProperty({ example: 'EMPBYDEFTO' })
   @IsString()
@@ -42,11 +42,11 @@ export class LoginUsuarioDto {
 
 export class LoginClienteDto {
   @IsOptional()
-  @ApiProperty({ example: contextTypes.CTM_CONTEXTS.DEFAULT.getCode() })
-  @IsEnum(contextTypes.CtmContexts, {
-    message: `${STRING_UTILITIES.enumToString(contextTypes.CtmContexts)}`,
+  @ApiProperty({ example: CTM_CONTEXTS.DEFAULT.getCode() })
+  @IsEnum(CtmContexts, {
+    message: `${STRING_UTILITIES.enumToString(CtmContexts)}`,
   })
-  contextCode!: contextTypes.CtmContextCode;
+  contextCode!: CtmContextCode;
 
   @ApiProperty({ example: 'EMPBYDEFTO' })
   @IsString()

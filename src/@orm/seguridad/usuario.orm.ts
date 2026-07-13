@@ -6,12 +6,14 @@ import {
   JoinTable,
   Column,
   Entity,
+  OneToMany,
 } from 'typeorm';
 import type { EstadoUsuarioCode, TipoDocUsuarioCode } from '@ctypes/general/usuario';
 import { PermisoOrm } from '../seguridad/permiso.orm';
 import { EmpresaOrm } from './empresa.orm';
 import { TerceroOrm } from './tercero.orm';
 import { RolOrm } from './rol.orm';
+import { ObraOrm } from '@orm/alquiler-maquinaria';
 
 @Entity('GENUSUARIO')
 export class UsuarioOrm {
@@ -87,4 +89,10 @@ export class UsuarioOrm {
     inverseJoinColumn: { name: 'GENSEGPERMISO', referencedColumnName: 'id' },
   })
   permisos!: PermisoOrm[];
+
+  @OneToMany(() => ObraOrm, obra => obra.responsable)
+  obrasComoResponsable!: ObraOrm[];
+
+  @OneToMany(() => ObraOrm, obra => obra.vendedor)
+  obrasComoVendedor!: ObraOrm[];
 }

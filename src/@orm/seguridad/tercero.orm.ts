@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UsuarioOrm } from './usuario.orm';
-import * as usuario from '@ctypes/general/usuario';
+import type { EstadoUsuarioCode } from '@ctypes/general/usuario';
+import { ObraOrm } from '@orm/alquiler-maquinaria';
 
 @Entity('GENTERCERO')
 export class TerceroOrm {
@@ -20,8 +21,11 @@ export class TerceroOrm {
   direccion!: string;
 
   @Column({ name: 'ESTADO', type: 'smallint' })
-  estadoCode!: usuario.EstadoUsuarioCode;
+  estadoCode!: EstadoUsuarioCode;
 
   @OneToMany(() => UsuarioOrm, usuario => usuario.terceros)
   usuarios!: UsuarioOrm[];
+
+  @OneToMany(() => ObraOrm, obra => obra.tercero)
+  obras!: ObraOrm[];
 }

@@ -1,19 +1,24 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
-import * as usuarioTypes from '@ctypes/general/usuario';
+import {
+  ESTADO_USUARIO,
+  type EstadoUsuarioCode,
+  TIPOS_DOCUMENTO,
+  type TipoDocUsuarioCode,
+} from '@ctypes/general/usuario';
 
 export class CreateUsuarioDto {
   @ApiProperty()
   @IsString()
   rolId!: string;
 
-  @ApiProperty({ example: usuarioTypes.TIPOS_DOCUMENTO.CEDULA_CIUDADANIA.getCode() })
+  @ApiProperty({ example: TIPOS_DOCUMENTO.CEDULA_CIUDADANIA.getCode() })
   @IsNumber()
-  tipoDocumentoCode!: usuarioTypes.TipoDocUsuarioCode;
+  tipoDocumentoCode!: TipoDocUsuarioCode;
 
-  @ApiProperty({ example: usuarioTypes.ESTADO_USUARIO.ACTIVO.getCode() })
+  @ApiProperty({ example: ESTADO_USUARIO.ACTIVO.getCode() })
   @IsNumber()
-  estadoCode!: usuarioTypes.EstadoUsuarioCode;
+  estadoCode!: EstadoUsuarioCode;
 
   @ApiProperty()
   @IsString()

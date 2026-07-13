@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { CorregimientoOrm } from './corregimiento.orm';
 import { DepartamentoOrm } from './departamento.orm';
-import * as ubicacion from '@ctypes/shared/ubicacion';
+import type { ZonaCode } from '@ctypes/shared/ubicacion';
 
 @Entity('UBIMUNICI')
 export class MunicipioOrm {
@@ -15,7 +15,7 @@ export class MunicipioOrm {
   nombre!: string;
 
   @Column({ name: 'ZONA' })
-  zonaCode!: ubicacion.ZonaCode;
+  zonaCode!: ZonaCode;
 
   @Column({ name: 'ACTIVO' })
   isActivo!: boolean;
