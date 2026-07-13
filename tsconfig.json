@@ -26,7 +26,8 @@
       "@common/*": ["./src/@common/*"],
       "@ctypes/*": ["./src/@types/*"],
       "@orm/*": ["./src/@orm/*"],
-      "@seg/*": ["./src/apps/seguridad/*"]
+      "@seg/*": ["./src/apps/seguridad/*"],
+      "@shared/*": ["./src/apps/shared/*"]
     }
   }
 }
