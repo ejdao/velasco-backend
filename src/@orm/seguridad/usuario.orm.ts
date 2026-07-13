@@ -10,6 +10,7 @@ import {
 import type { EstadoUsuarioCode, TipoDocUsuarioCode } from '@ctypes/general/usuario';
 import { PermisoOrm } from '../seguridad/permiso.orm';
 import { EmpresaOrm } from './empresa.orm';
+import { TerceroOrm } from './tercero.orm';
 import { RolOrm } from './rol.orm';
 
 @Entity('GENUSUARIO')
@@ -70,6 +71,14 @@ export class UsuarioOrm {
     inverseJoinColumn: { name: 'GENEMPRESA', referencedColumnName: 'id' },
   })
   empresas!: EmpresaOrm[];
+
+  @ManyToMany(() => TerceroOrm, tercero => tercero.usuarios)
+  @JoinTable({
+    name: 'GENUSUARIOTERCERO',
+    joinColumn: { name: 'GENUSUARIO', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'GENTERCERO', referencedColumnName: 'id' },
+  })
+  terceros!: TerceroOrm[];
 
   @ManyToMany(() => PermisoOrm, permiso => permiso.usuarios)
   @JoinTable({

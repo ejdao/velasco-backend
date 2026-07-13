@@ -7,6 +7,7 @@ import { SubModuloOrm } from './sub-modulo.orm';
 import { TokenOrm } from './token.orm';
 import { TipoTransaccionOrm } from './tipo-transaccion.orm';
 import { TransaccionOrm } from './transaccion.orm';
+import { TerceroOrm } from './tercero.orm';
 
 export * from './empresa.orm';
 export * from './usuario.orm';
@@ -17,6 +18,7 @@ export * from './sub-modulo.orm';
 export * from './token.orm';
 export * from './tipo-transaccion.orm';
 export * from './transaccion.orm';
+export * from './tercero.orm';
 
 export const ORM_SEG_ENTITIES = [
   EmpresaOrm,
@@ -28,4 +30,5 @@ export const ORM_SEG_ENTITIES = [
   TokenOrm,
   TipoTransaccionOrm,
   TransaccionOrm,
+  TerceroOrm,
 ];
