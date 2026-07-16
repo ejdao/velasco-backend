@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { CategoriaProductoOrm } from './producto-categoria.orm';
 import { TarifaProductoOrm } from './producto-tarifa.orm';
+import { ProductoStockOrm } from './producto-stock.orm';
 
 @Entity('ALQMAQPRODUCTO')
 export class ProductoOrm {
@@ -29,4 +30,7 @@ export class ProductoOrm {
 
   @OneToMany(() => TarifaProductoOrm, tarifa => tarifa.producto)
   tarifas!: TarifaProductoOrm[];
+
+  @OneToMany(() => ProductoStockOrm, stock => stock.producto)
+  stocks!: ProductoStockOrm[];
 }
