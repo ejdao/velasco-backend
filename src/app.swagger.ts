@@ -1,6 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { SeguridadModule } from '@seg/module';
+import { SRD_MODULES } from '@shared/module';
 
 const title = 'Velasco App';
 
@@ -13,6 +14,7 @@ interface ConfigI {
 
 const config: ConfigI[] = [
   { name: 'Seguridad', url: 'docs/seguridad', version: '1.0', modules: [SeguridadModule] },
+  { name: 'Shared', url: 'docs/shared', version: '1.0', modules: SRD_MODULES },
 ];
 
 export const initSwagger = (app: INestApplication) => {

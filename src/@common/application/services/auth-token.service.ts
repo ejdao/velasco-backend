@@ -1,8 +1,4 @@
-import {
-  CtmContextCode,
-  CtmContextType,
-  ctmContextTypeFactory,
-} from '@common/domain/types';
+import { CtmContextCode, CtmContextType, ctmContextTypeFactory } from '@common/domain/types';
 import { ENVIRONMENTS } from '@env';
 import { RSA_SERVICES } from './rsa.service';
 import { jwtDecode } from 'jwt-decode';
@@ -26,7 +22,7 @@ export class AuthTokenDecoded {
     private document: string,
     private context: CtmContextType,
     private createdAt?: Date,
-    private expiredAt?: Date,
+    private expiredAt?: Date
   ) {}
 
   getId(): number {
@@ -70,7 +66,7 @@ const decode = (token: string): AuthTokenDecoded => {
       tokDecoded.sub,
       ctmContextTypeFactory(tokDecoded.iss),
       _tokenDateToDate(tokDecoded.iat),
-      _tokenDateToDate(tokDecoded.exp),
+      _tokenDateToDate(tokDecoded.exp)
     );
   } catch (error: any) {
     throw new Error('Token not found or invalid');

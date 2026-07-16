@@ -48,7 +48,7 @@ export class LoginUsuarioImpl {
           estadoCode: true,
           isPasswordReiniciada: true,
         },
-        relations: ['empresas'] as any,
+        relations: { empresas: true },
       });
 
       if (!usuario) throw new Error(wrongCredentialsMsg);

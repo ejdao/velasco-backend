@@ -30,7 +30,7 @@ export class SubModulosCrudSource extends BaseSource {
 
         body.nombre = body.nombre.trim();
 
-        // await this.verifyEntityExist('GENSEGMODULO', +body.moduloId, qr);
+        await this.verifyEntityExist('GENSEGMODULO', +body.moduloId, qr);
 
         const lastSubModulo = await subModuloRp.find({
           where: { moduloId: +body.moduloId },

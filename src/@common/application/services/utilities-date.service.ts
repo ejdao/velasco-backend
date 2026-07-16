@@ -4,20 +4,9 @@ export interface DateRangeI {
 }
 
 type DayForHumans =
-  | 'Lunes'
-  | 'Martes'
-  | 'Miercoles'
-  | 'Jueves'
-  | 'Viernes'
-  | 'Sabado'
-  | 'Domingo'
-  | undefined;
+  'Lunes' | 'Martes' | 'Miercoles' | 'Jueves' | 'Viernes' | 'Sabado' | 'Domingo' | undefined;
 
-const rangeOneDay = (
-  start: Date,
-  end?: Date,
-  manageTimeZone?: 'add' | 'remove',
-): DateRangeI => {
+const rangeOneDay = (start: Date, end?: Date, manageTimeZone?: 'add' | 'remove'): DateRangeI => {
   if (typeof start === 'string') start = new Date(`${start}T00:00:00.000Z`);
   else start = new Date(`${start.toISOString().split('T')[0]}T00:00:00.000Z`);
   if (end) {
@@ -36,9 +25,7 @@ const rangeOneDay = (
 
 const manageTimeZone = (date: Date, key: 'remove' | 'add') => {
   let value = 18000000;
-  return key === 'add'
-    ? new Date(date.getTime() + value)
-    : new Date(date.getTime() - value);
+  return key === 'add' ? new Date(date.getTime() + value) : new Date(date.getTime() - value);
 };
 
 const parseMinutesToDate = (date: Date, minutes: number) => {
@@ -48,10 +35,7 @@ const parseMinutesToDate = (date: Date, minutes: number) => {
   return res;
 };
 
-const generateRangesByInterval = (
-  dateRanges: DateRangeI[],
-  interval: number,
-): DateRangeI[] => {
+const generateRangesByInterval = (dateRanges: DateRangeI[], interval: number): DateRangeI[] => {
   const result: DateRangeI[] = [];
   const intervalMs = interval * 60 * 1000;
   for (const dateRange of dateRanges) {

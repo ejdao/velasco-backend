@@ -2,10 +2,7 @@ import { STRING_UTILITIES } from '@common/application/services';
 import { Raw } from 'typeorm';
 
 const like = (pattern: string) => {
-  return Raw(
-    (value) =>
-      `LOWER(${value}) Like '%${STRING_UTILITIES.lowerCaseAndTrim(pattern)}%'`,
-  );
+  return Raw(value => `LOWER(${value}) Like '%${STRING_UTILITIES.lowerCaseAndTrim(pattern)}%'`);
 };
 
 const take = (pattern: string, take = 5) => {

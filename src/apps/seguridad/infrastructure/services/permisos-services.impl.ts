@@ -37,7 +37,7 @@ export class PermisosServicesImpl extends BaseSource {
 
       const usuario = await usuarioRp.findOne({
         where: { id: usuarioIdDcd, empresas: { codigo: this.auth.enterpriseCode } },
-        relations: ['permisos'] as any,
+        relations: { permisos: true },
       });
       if (!usuario) throw new Error('Este usuario no existe para esta empresa');
 
@@ -74,7 +74,7 @@ export class PermisosServicesImpl extends BaseSource {
 
       const usuario = await usuarioRp.findOne({
         where: { id: usuarioIdDcd, empresas: { codigo: this.auth.enterpriseCode } },
-        relations: ['permisos'] as any,
+        relations: { permisos: true },
       });
       if (!usuario) throw new Error('Este usuario no existe');
 
@@ -111,7 +111,7 @@ export class PermisosServicesImpl extends BaseSource {
       });
       if (!permiso) throw new Error('Este permiso no existe o no está disponible en esta empresa');
 
-      const rol = await rolRp.findOne({ where: { id: rolIdDcd }, relations: ['permisos'] as any });
+      const rol = await rolRp.findOne({ where: { id: rolIdDcd }, relations: { permisos: true } });
       if (!rol) throw new Error('Este rol no existe');
 
       rol.permisos.push(permiso);
@@ -143,7 +143,7 @@ export class PermisosServicesImpl extends BaseSource {
       const permiso = await permisoRp.findOne({ where: { id: permisoIdDcd } });
       if (!permiso) throw new Error('Este permiso no existe o no está disponible en esta empresa');
 
-      const rol = await rolRp.findOne({ where: { id: rolIdDcd }, relations: ['permisos'] as any });
+      const rol = await rolRp.findOne({ where: { id: rolIdDcd }, relations: { permisos: true } });
       if (!rol) throw new Error('Este rol no existe para esta empresa');
 
       rol.permisos = rol.permisos.filter(authority => {

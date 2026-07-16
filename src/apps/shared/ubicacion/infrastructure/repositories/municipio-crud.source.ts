@@ -12,8 +12,8 @@ export class MunicipioCrudSource extends SharedBaseSource {
     pattern: string,
     payload: { addCorregimientos: boolean }
   ): Promise<MunicipioRes[]> {
-    const relations: string[] = [];
-    if (payload.addCorregimientos) relations.push('corregimientos');
+    const relations: any = {};
+    if (payload.addCorregimientos) relations.corregimientos = true;
     const departamentoRp = this.conn.getRepository(DepartamentoOrm);
     const municipioRp = this.conn.getRepository(MunicipioOrm);
 
@@ -23,7 +23,7 @@ export class MunicipioCrudSource extends SharedBaseSource {
       where: pattern
         ? { departamentoId, nombre: TYPE_ORM_UTILITIES.like(pattern) }
         : { departamentoId },
-      relations: relations as any,
+      relations,
       take: TYPE_ORM_UTILITIES.take(pattern),
     });
 

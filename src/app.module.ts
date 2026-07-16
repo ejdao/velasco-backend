@@ -1,11 +1,13 @@
 import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { DATASOURCES } from './app.connections';
 import { SeguridadModule } from '@seg/module';
+import { SharedModule } from '@shared/module';
 
 @Module({
   imports: [
     // --- //
     SeguridadModule,
+    SharedModule,
   ],
 })
 export class AppModule implements OnModuleInit {

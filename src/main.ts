@@ -13,10 +13,7 @@ async function bootstrap() {
 
   const appOptions = ENVIRONMENTS.httpsIsActive ? { httpsOptions } : {};
 
-  const app = await NestFactory.create<NestExpressApplication>(
-    AppModule,
-    appOptions,
-  );
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, appOptions);
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
@@ -24,8 +21,7 @@ async function bootstrap() {
 
   app.enableCors({
     origin: function (origin, callback) {
-      if (!origin || ENVIRONMENTS.whiteList.indexOf(origin) >= 0)
-        callback(null, true);
+      if (!origin || ENVIRONMENTS.whiteList.indexOf(origin) >= 0) callback(null, true);
       else callback(new Error('Not allowed by CORS'));
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],

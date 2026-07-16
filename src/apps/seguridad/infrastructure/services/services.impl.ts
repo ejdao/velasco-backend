@@ -51,7 +51,7 @@ export class AuthServicesImpl extends BaseSource {
 
       const usuario = await usuarioRp.findOne({
         where: [{ id: this.auth.id }],
-        relations: ['empresas'] as any,
+        relations: { empresas: true },
       });
 
       usuario!.password = await CRYPTO_SERVICES.encrypt(newPassword);

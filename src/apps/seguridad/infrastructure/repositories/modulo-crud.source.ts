@@ -12,7 +12,7 @@ export class ModulosCrudSource extends BaseSource {
   public async fetch(): Promise<FetchModuloRes[]> {
     try {
       const moduloRp = this.conn.getRepository(ModuloOrm);
-      let modulos = await moduloRp.find({ relations: ['subModulos'] as any });
+      let modulos = await moduloRp.find({ relations: { subModulos: true } });
 
       modulos.map(el => {
         el.subModulos = el.subModulos.filter(sm => sm.isActivo);

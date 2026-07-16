@@ -11,15 +11,15 @@ export class PaisCrudSource extends SharedBaseSource {
     pattern: string,
     payload: { addDepartamentos: boolean; addMunicipios: boolean; addCorregimientos: boolean }
   ): Promise<PaisRes[]> {
-    const relations: string[] = [];
-    if (payload.addDepartamentos) relations.push('departamentos');
-    if (payload.addMunicipios) relations.push('departamentos.municipios');
-    if (payload.addCorregimientos) relations.push('departamentos.municipios.corregimientos');
+    const relations: any = {};
+    if (payload.addDepartamentos) relations.departamentos = true;
+    if (payload.addMunicipios) relations.departamentos.municipios = true;
+    if (payload.addCorregimientos) relations.departamentos.municipios.corregimientos = true;
 
     const paisRp = this.conn.getRepository(PaisOrm);
     const paises = await paisRp.find({
       where: pattern ? { nombre: TYPE_ORM_UTILITIES.like(pattern) } : {},
-      relations: relations as any,
+      relations,
       take: TYPE_ORM_UTILITIES.take(pattern),
     });
 

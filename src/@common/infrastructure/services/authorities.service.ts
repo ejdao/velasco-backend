@@ -16,15 +16,10 @@ export const fetchAuthoritiesByUsuario = async (
     const usuarioRp = conn.getRepository(UsuarioOrm);
     const usuario = await usuarioRp.findOne({
       where: { id },
-      relations: [
-        'permisos',
-        'permisos.modulo',
-        'permisos.subModulo',
-        'rol',
-        'rol.permisos',
-        'rol.permisos.modulo',
-        'rol.permisos.subModulo',
-      ] as any,
+      relations: {
+        permisos: { modulo: true, subModulo: true },
+        rol: { permisos: { subModulo: true, modulo: true } },
+      },
     });
 
     const permisos: PermisoOrm[] = [];
@@ -111,7 +106,7 @@ export const fetchAuthorities = async (ctx: CtmContextType): Promise<FetchPermis
 
     const permisoRp = conn.getRepository(PermisoOrm);
 
-    const allPermisos = await permisoRp.find({ relations: ['modulo', 'subModulo'] as any });
+    const allPermisos = await permisoRp.find({ relations: { modulo: true, subModulo: true } });
 
     const permisos = allPermisos.map(el => {
       let permiso = '';

@@ -12,15 +12,15 @@ export class DepartamentoCrudSource extends SharedBaseSource {
     pattern: string,
     payload: { addMunicipios: boolean; addCorregimientos: boolean }
   ): Promise<DepartamentoRes[]> {
-    const relations: string[] = [];
-    if (payload.addMunicipios) relations.push('municipios');
-    if (payload.addCorregimientos) relations.push('municipios.corregimientos');
+    const relations: any = {};
+    if (payload.addMunicipios) relations.municipios = true;
+    if (payload.addCorregimientos) relations.municipios.corregimientos = true;
 
     const departamentoRp = this.conn.getRepository(DepartamentoOrm);
 
     const departamentos = await departamentoRp.find({
       where: pattern ? { paisId, nombre: TYPE_ORM_UTILITIES.like(pattern) } : { paisId },
-      relations: relations as any,
+      relations,
       take: TYPE_ORM_UTILITIES.take(pattern),
     });
 

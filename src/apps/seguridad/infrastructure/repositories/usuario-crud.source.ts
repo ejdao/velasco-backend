@@ -19,7 +19,7 @@ export class UsuarioCrudSource extends BaseSource {
     const usuarioRp = this.conn.getRepository(UsuarioOrm);
     const usuarios = await usuarioRp.find({
       where: { documento, empresas: { codigo: this.auth.enterpriseCode } },
-      relations: ['rol'] as any,
+      relations: { rol: true },
     });
     if (documento && isUpdatingUsers && usuarios.length) {
       if (this.auth.id === usuarios[0].id) throw new Error('No puede modificar su propio usuario');
@@ -35,9 +35,7 @@ export class UsuarioCrudSource extends BaseSource {
       await this.qr.startTransaction();
 
       const rolIdDcd: number = +RSA_SERVICES.decryptValue(body.rolId);
-      // await this.verifyEntityExist('GENROL', rolIdDcd);
-
-      const empresa = await this.getEnterprise();
+      await this.verifyEntityExist('GENROL', rolIdDcd);
 
       const usuarioRp = this.qr.manager.getRepository(UsuarioOrm);
 

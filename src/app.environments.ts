@@ -3,8 +3,7 @@ import NodeRSA from 'node-rsa';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-const convertStringToBoolean = (txt: string | undefined) =>
-  txt === 'true' ? true : false;
+const convertStringToBoolean = (txt: string | undefined) => (txt === 'true' ? true : false);
 
 export const ENVIRONMENTS = {
   port: process.env.PORT || 3000,

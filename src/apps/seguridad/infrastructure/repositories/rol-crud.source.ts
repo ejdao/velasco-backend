@@ -17,9 +17,7 @@ export class RolCrudSource extends BaseSource {
             { nombre: Like(`%${STRING_UTILITIES.upperCaseAndTrim(pattern)}%`) },
           ]
         : undefined,
-      relations: addComplements
-        ? (['permisos', 'permisos.modulo', 'permisos.subModulo'] as any)
-        : undefined,
+      relations: addComplements ? { permisos: { modulo: true, subModulo: true } } : undefined,
     });
 
     /** Solo sale rol "SIN PERMISOS" (001) cuando estan creando al nuevo usuario */

@@ -46,11 +46,11 @@ export class BaseSource {
     if (!result) throw new Error(`No existe ${tablePath} con este id`);
   }
 
-  protected async getEnterprise(relations?: string[]) {
+  protected async getEnterprise(relations?: any) {
     const empresaRp = this.conn.getRepository(EmpresaOrm);
     const empresa = await empresaRp.findOne({
       where: { codigo: this.auth.enterpriseCode },
-      relations: relations as any,
+      relations,
     });
     return empresa;
   }
