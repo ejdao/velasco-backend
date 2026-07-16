@@ -27,40 +27,15 @@ export class LoginUsuarioDto {
   })
   contextCode!: CtmContextCode;
 
-  @ApiProperty({ example: 'EMPBYDEFTO' })
+  @ApiProperty({ example: '001' })
   @IsString()
   enterpriseCode!: string;
 
-  @ApiProperty({ example: '1234' })
+  @ApiProperty({ example: 'admin@velascoalq.com' })
   @IsString()
   username!: string;
 
   @ApiProperty({ example: '12345678' })
   @IsString()
   password!: string;
-}
-
-export class LoginClienteDto {
-  @IsOptional()
-  @ApiProperty({ example: CTM_CONTEXTS.DEFAULT.getCode() })
-  @IsEnum(CtmContexts, {
-    message: `${STRING_UTILITIES.enumToString(CtmContexts)}`,
-  })
-  contextCode!: CtmContextCode;
-
-  @ApiProperty({ example: 'EMPBYDEFTO' })
-  @IsString()
-  enterpriseCode!: string;
-
-  @ApiProperty({ example: '3005007792' })
-  @IsString()
-  phoneNumber!: string;
-
-  @ApiProperty({ example: 'rafael@gmail.com' })
-  @IsString()
-  email!: string;
-
-  @ApiProperty({ example: 'RAFAEL MENDOZA' })
-  @IsString()
-  fullName!: string;
 }

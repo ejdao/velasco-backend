@@ -3,7 +3,7 @@ import { BadRequestException, Body, Controller, Get, Post } from '@nestjs/common
 import { CTM_CONTEXTS_AUTHS_VALUES, CtmContextType, CtmTypeRes } from '@common/domain/types';
 import { LoginUsuarioImpl } from '@seg/infrastructure/services';
 import { FetchEnterprisesRes, LoginRes } from '@seg/application/responses';
-import { FetchEnterprisesDto, LoginClienteDto, LoginUsuarioDto } from '@seg/application/dtos';
+import { FetchEnterprisesDto, LoginUsuarioDto } from '@seg/application/dtos';
 
 @ApiTags('V1 | Autenticación')
 @Controller('v1/auth')

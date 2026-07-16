@@ -8,6 +8,9 @@ export class ProductoOrm {
   @PrimaryGeneratedColumn({ name: 'ID', type: 'int' })
   id!: number;
 
+  @Column({ name: 'CODIGO', length: 30, unique: true })
+  codigo!: string;
+
   @Column({ name: 'NOMBRE', length: 150 })
   nombre!: string;
 

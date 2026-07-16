@@ -36,7 +36,6 @@ export class PermisosCrudSource extends BaseSource {
     });
     if (permisoConMismoNombre.length) throw new Error('Ya existe un permiso con este nombre');
 
-    let permisoForThisBBDD: PermisoOrm;
     for (let index = 0; index < CTM_CONTEXTS_AUTHS_VALUES.length; index++) {
       const ctx = CTM_CONTEXTS_AUTHS_VALUES[index];
       const qr = this.dynamicQR(ctx);
@@ -66,9 +65,7 @@ export class PermisosCrudSource extends BaseSource {
         newPermiso.subModuloId = lclSubModulo!.id;
         newPermiso.nombre = body.nombre;
 
-        const stored = await permisoRp.save(newPermiso);
-
-        if (ctx === this.auth.context) permisoForThisBBDD = stored;
+        await permisoRp.save(newPermiso);
 
         await qr.commitTransaction();
       } catch (error: any) {

@@ -8,9 +8,6 @@ export class ProductoStockOrm {
   @PrimaryGeneratedColumn({ name: 'ID', type: 'int' })
   id!: number;
 
-  @Column({ name: 'CODIGO', length: 30, unique: true })
-  codigo!: string;
-
   @Column({ name: 'ALQMAQPRODUCTO', type: 'int' })
   productoId!: number;
 
@@ -25,11 +22,23 @@ export class ProductoStockOrm {
   @JoinColumn({ name: 'GENTERCERO' })
   proveedor!: TerceroOrm;
 
-  @Column({ name: 'CANTIDAD', type: 'numeric', precision: 5, scale: 2 })
-  cantidad!: number;
+  @Column({ name: 'STOCKORIGINAL', type: 'int' })
+  stockOriginal!: number;
 
-  @Column({ name: 'FECHAVENCIMIENTO', nullable: true })
-  fechaVencimiento!: Date;
+  @Column({ name: 'STOCKACTUAL', type: 'int', nullable: true })
+  stockDisponible!: number;
+
+  @Column({ name: 'STOCKRESERVADO', type: 'int', nullable: true })
+  stockReservado!: number;
+
+  @Column({ name: 'STOCKENALQUILE', type: 'int', nullable: true })
+  stockEnAlquiler!: number;
+
+  @Column({ name: 'STOCKENMANTENI', type: 'int', nullable: true })
+  stockEnMantenimiento!: number;
+
+  @Column({ name: 'STOCKRETIRADO', type: 'int', nullable: true })
+  stockRetirado!: number;
 
   @Column({ name: 'ESTADO', type: 'smallint' })
   estadoCode!: EstadoProductoCode;

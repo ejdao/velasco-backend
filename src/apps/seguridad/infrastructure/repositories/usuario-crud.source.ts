@@ -18,7 +18,9 @@ export class UsuarioCrudSource extends BaseSource {
   public async fetch(documento: string, isUpdatingUsers: boolean): Promise<FetchUsuarioRes[]> {
     const usuarioRp = this.conn.getRepository(UsuarioOrm);
     const usuarios = await usuarioRp.find({
-      where: { documento, empresas: { codigo: this.auth.enterpriseCode } },
+      where: documento
+        ? { documento, empresas: { codigo: this.auth.enterpriseCode } }
+        : { empresas: { codigo: this.auth.enterpriseCode } },
       relations: { rol: true },
     });
     if (documento && isUpdatingUsers && usuarios.length) {
