@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { BaseSource } from '@common/infrastructure/services';
 import { terceroOrmToFetchClienteResFactory } from '../factories';
 import { FetchClienteRes } from '@general/application/responses';
+import { CreateClienteDto } from '@general/application/dtos';
+import { ESTADO_USUARIO } from '@ctypes/general/usuario';
 import { TerceroOrm, UsuarioOrm } from '@orm/seguridad';
 import { MunicipioOrm } from '@orm/shared/ubicacion';
 import { uniq } from 'lodash';
@@ -49,5 +51,28 @@ export class ClientesCrudSource extends BaseSource {
     });
 
     return terceros.map(cliente => terceroOrmToFetchClienteResFactory(cliente));
+  }
+
+  public async create(body: CreateClienteDto): Promise<boolean> {
+    try {
+      const terceroRp = this.conn.getRepository(TerceroOrm);
+
+      const existing = await terceroRp.findOne({ where: { nit: body.nit } });
+      if (existing) throw new Error('Ya existe un cliente con este NIT');
+
+      const cliente = new TerceroOrm();
+      cliente.nit = body.nit;
+      cliente.nombre = body.nombre;
+      cliente.direccion = body.direccion;
+      cliente.tipoCode = body.tipoPersonaCode;
+      cliente.municipioId = body.municipioId;
+      cliente.estadoCode = ESTADO_USUARIO.ACTIVO.getCode();
+
+      await terceroRp.save(cliente);
+
+      return true;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
   }
 }

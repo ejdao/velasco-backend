@@ -1,8 +1,9 @@
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CommonGuards } from '@common/presentation/decorators';
-import { BadRequestException, Controller, Get } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post } from '@nestjs/common';
 import { ClientesCrudSource } from '@general/infrastructure/repositories';
 import { FetchClienteRes } from '@general/application/responses';
+import { CreateClienteDto } from '@general/application/dtos';
 
 @ApiTags('V1 | Clientes')
 @CommonGuards()
@@ -15,6 +16,16 @@ export class ClientesController {
   public async fetch(): Promise<FetchClienteRes[]> {
     try {
       return await this._crud.fetch();
+    } catch (error: any) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  @ApiOkResponse({ type: Boolean })
+  @Post()
+  public async create(@Body() body: CreateClienteDto): Promise<boolean> {
+    try {
+      return await this._crud.create(body);
     } catch (error: any) {
       throw new BadRequestException(error.message);
     }

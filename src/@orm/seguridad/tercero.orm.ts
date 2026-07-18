@@ -1,13 +1,17 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { UsuarioOrm } from './usuario.orm';
 import type { EstadoUsuarioCode } from '@ctypes/general/usuario';
-import { ObraOrm } from '@orm/alquiler-maquinaria';
+import type { TipoTerceroCode } from '@ctypes/general/tercero';
 import { MunicipioOrm } from '@orm/shared/ubicacion';
+import { ObraOrm } from '@orm/alquiler-maquinaria';
+import { UsuarioOrm } from './usuario.orm';
 
 @Entity('GENTERCERO')
 export class TerceroOrm {
   @PrimaryGeneratedColumn({ name: 'ID', type: 'int' })
   id!: number;
+
+  @Column({ name: 'TIPOPER', type: 'smallint' })
+  tipoCode!: TipoTerceroCode;
 
   @Column({ name: 'NIT', length: 20, unique: true })
   nit!: string;

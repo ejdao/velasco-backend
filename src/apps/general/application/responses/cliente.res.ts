@@ -47,6 +47,9 @@ export class FetchClienteRes {
   @ApiProperty({ type: CtmTypeRes })
   estado!: CtmTypeRes;
 
+  @ApiProperty({ type: CtmTypeRes })
+  tipoPersona!: CtmTypeRes;
+
   @ApiProperty({ type: RecursoRes })
   municipio!: RecursoRes;
 
