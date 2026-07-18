@@ -1,3 +1,4 @@
+import { GeneralModule } from '@general/module';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { SeguridadModule } from '@seg/module';
@@ -13,6 +14,7 @@ interface ConfigI {
 }
 
 const config: ConfigI[] = [
+  { name: 'General', url: 'docs/general', version: '1.0', modules: [GeneralModule] },
   { name: 'Seguridad', url: 'docs/seguridad', version: '1.0', modules: [SeguridadModule] },
   { name: 'Shared', url: 'docs/shared', version: '1.0', modules: SRD_MODULES },
 ];

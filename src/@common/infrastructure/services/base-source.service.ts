@@ -3,7 +3,7 @@ import { REQUEST } from '@nestjs/core';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { DataSource, Entity, PrimaryGeneratedColumn, QueryRunner, Repository } from 'typeorm';
 import { EmpresaOrm, UsuarioOrm, TransaccionOrm, TipoTransaccionOrm } from '@orm/seguridad';
-import { CtmContextType } from '@common/domain/types';
+import { CTM_CONTEXTS, CtmContextType } from '@common/domain/types';
 import { FetchPermisoRes } from '@seg/application/responses';
 import { JWT_SERVICES, STRING_UTILITIES } from '@common/application/services';
 import { switchConn } from '../../../app.connections';
@@ -18,11 +18,13 @@ export class JustForVerifyOrm {
 @Injectable()
 export class BaseSource {
   protected conn: DataSource;
+  protected sharedConn: DataSource;
   protected qr: QueryRunner;
 
   constructor(@Inject(REQUEST) private _request: express.Request) {
     try {
       this.conn = switchConn(this.auth.context);
+      this.sharedConn = switchConn(CTM_CONTEXTS.SHARED);
       this.qr = this.conn.createQueryRunner();
     } catch (error: any) {
       throw new UnauthorizedException('Requiere token de autenticación');

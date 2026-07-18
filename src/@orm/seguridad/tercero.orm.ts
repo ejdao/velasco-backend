@@ -2,6 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UsuarioOrm } from './usuario.orm';
 import type { EstadoUsuarioCode } from '@ctypes/general/usuario';
 import { ObraOrm } from '@orm/alquiler-maquinaria';
+import { MunicipioOrm } from '@orm/shared/ubicacion';
 
 @Entity('GENTERCERO')
 export class TerceroOrm {
@@ -28,4 +29,6 @@ export class TerceroOrm {
 
   @OneToMany(() => ObraOrm, obra => obra.tercero)
   obras!: ObraOrm[];
+
+  municipio!: MunicipioOrm;
 }

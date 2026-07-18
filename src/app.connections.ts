@@ -33,6 +33,10 @@ export const DEFAULT_DES = new DataSource({
   synchronize,
   type,
   port,
+  invalidWhereValuesBehavior: {
+  null: 'ignore',
+  undefined: 'ignore',
+}
 });
 
 export const DATASOURCES = [

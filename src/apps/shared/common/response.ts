@@ -10,11 +10,11 @@ export class RecursoRes {
   nombre!: string;
 }
 
-export const entidadOrmToRes = (
+export const entidadOrmToRecursoRes = (
   e: any,
   isIdEncrypted: boolean,
   data?: { id?: string; codigo?: string; nombre?: string }
-) => {
+): RecursoRes => {
   if (!data) data = {};
   const id = data.id ? e[data.id] : e.id;
   const r = new RecursoRes();
