@@ -23,7 +23,7 @@ export class ActiveTokenGuard implements CanActivate {
       const isUpdatePassword = url.includes('auth/update-password') || url.includes('auth/data');
       const isPasswordReiniciada = (usuario as UsuarioOrm).isPasswordReiniciada;
       const tokenFromBBDD = await tokenRp.findOne({ where: { usuarioId } });
-      if (tokenFromBBDD && tokenFromBBDD.token !== token) {
+      if (tokenFromBBDD && tokenFromBBDD.token !== tokenUncrypted) {
         throw new Error('Ya cerró sesión con este token');
       } else if (isPasswordReiniciada && !isUpdatePassword) {
         throw new Error('Debe cambiar la contraseña ya que fue reiniciada recientemente');

@@ -118,7 +118,9 @@ export class LoginUsuarioImpl {
           ultimoAcceso: true,
           estadoCode: true,
           isPasswordReiniciada: true,
+          terceros: true,
         },
+        relations: { terceros: true },
       });
 
       if (!usuario) throw new Error(wrongCredentialsMsg);
@@ -137,6 +139,7 @@ export class LoginUsuarioImpl {
           empresaCode: empresa.codigo,
           isPasswordReiniciada: usuario.isPasswordReiniciada,
           documento: usuario.documento,
+          terceroId: usuario?.terceros.length ? usuario.terceros[0].id : undefined!,
           context: ctx,
           expiresIn: '7d',
         });
@@ -150,13 +153,13 @@ export class LoginUsuarioImpl {
           newToken = new TokenOrm();
           newToken.usuarioId = usuario.id;
         }
-        newToken.token = RSA_SERVICES.encryptValue(token);
+        newToken.token = token;
         newToken.ultimoAcceso = new Date();
         await tokenRp.save(newToken);
 
         await qr.commitTransaction();
 
-        return { token: newToken.token };
+        return { token: RSA_SERVICES.encryptValue(token) };
       } else {
         throw new Error(wrongCredentialsMsg);
       }

@@ -49,6 +49,10 @@ export class CreateUsuarioDto {
   @ApiProperty({ example: 'string (opcional)' })
   @IsOptional()
   email!: string;
+
+  @ApiProperty({ example: 0 })
+  @IsOptional()
+  terceroId!: number;
 }
 
 export class UpdateUsuarioDto extends CreateUsuarioDto {

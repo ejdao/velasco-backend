@@ -14,6 +14,20 @@ class RolRes {
   nombre!: string;
 }
 
+class TerceroResponsableRes {
+  @ApiProperty()
+  id!: number;
+
+  @ApiProperty()
+  nit!: string;
+
+  @ApiProperty()
+  nombre!: string;
+
+  @ApiProperty({ example: 'string | null' })
+  direccion!: string;
+}
+
 export class FetchUsuarioRes {
   @ApiProperty()
   id!: string;
@@ -59,4 +73,7 @@ export class FetchUsuarioRes {
 
   @ApiProperty({ type: CtmTypeRes })
   tipoDocumento!: CtmTypeRes;
+
+  @ApiProperty({ type: TerceroResponsableRes, isArray: true })
+  terceros!: TerceroResponsableRes[];
 }

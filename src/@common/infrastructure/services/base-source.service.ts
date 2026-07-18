@@ -76,8 +76,9 @@ export class BaseSource {
       const enterpriseCode = tkDecoded.getEnterpriseCode();
       const document = tkDecoded.getDocument();
       const context = tkDecoded.getContext();
+      const terceroId = tkDecoded.getTerceroId();
 
-      return { id, enterpriseCode, document, context };
+      return { id, enterpriseCode, document, context, terceroId };
     } catch (error: any) {
       throw new UnauthorizedException(error.message);
     }

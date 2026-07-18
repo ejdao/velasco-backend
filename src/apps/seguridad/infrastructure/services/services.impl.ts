@@ -51,7 +51,7 @@ export class AuthServicesImpl extends BaseSource {
 
       const usuario = await usuarioRp.findOne({
         where: [{ id: this.auth.id }],
-        relations: { empresas: true },
+        relations: { empresas: true, terceros: true },
       });
 
       usuario!.password = await CRYPTO_SERVICES.encrypt(newPassword);
@@ -67,6 +67,7 @@ export class AuthServicesImpl extends BaseSource {
           isPasswordReiniciada: false,
           documento: usuario!.documento,
           context: this.auth.context,
+          terceroId: usuario?.terceros.length ? usuario.terceros[0].id : undefined!,
           expiresIn: '7d',
         });
 

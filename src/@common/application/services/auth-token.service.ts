@@ -11,6 +11,7 @@ export interface AuthTokenI {
   sub: string;
   iss: CtmContextCode;
   rst: boolean;
+  tcr: string;
   iat?: number;
   exp?: number;
 }
@@ -21,6 +22,7 @@ export class AuthTokenDecoded {
     private enterpriseCode: string,
     private document: string,
     private context: CtmContextType,
+    private terceroId?: number,
     private createdAt?: Date,
     private expiredAt?: Date
   ) {}
@@ -31,6 +33,10 @@ export class AuthTokenDecoded {
 
   getEnterpriseCode(): string {
     return this.enterpriseCode;
+  }
+
+  getTerceroId(): number | undefined {
+    return this.terceroId;
   }
 
   getDocument(): string {
@@ -65,6 +71,7 @@ const decode = (token: string): AuthTokenDecoded => {
       tokDecoded.aud,
       tokDecoded.sub,
       ctmContextTypeFactory(tokDecoded.iss),
+      tokDecoded.tcr ? +RSA_SERVICES.decryptValue(tokDecoded.tcr) : undefined,
       _tokenDateToDate(tokDecoded.iat),
       _tokenDateToDate(tokDecoded.exp)
     );
@@ -78,6 +85,7 @@ export const generate = (pl: {
   empresaCode: string;
   isPasswordReiniciada: boolean;
   documento: string;
+  terceroId: number;
   context: CtmContextType;
   expiresIn: StringValue | number;
 }) => {
@@ -86,6 +94,7 @@ export const generate = (pl: {
     aud: pl.empresaCode,
     rst: pl.isPasswordReiniciada,
     sub: pl.documento,
+    tcr: RSA_SERVICES.encryptValue(pl.terceroId),
     iss: pl.context.getCode(),
   };
 

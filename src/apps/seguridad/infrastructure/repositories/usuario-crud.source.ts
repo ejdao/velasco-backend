@@ -5,7 +5,7 @@ import { CRYPTO_SERVICES, RSA_SERVICES, STRING_UTILITIES } from '@common/applica
 import { CreateUsuarioRes, FetchUsuarioRes } from '@seg/application/responses';
 import { CreateUsuarioDto, UpdateUsuarioDto } from '@seg/application/dtos';
 import { usuarioOrmToUsuarioResFactory } from '../factories';
-import { UsuarioOrm, TokenOrm } from '@orm/seguridad';
+import { UsuarioOrm, TokenOrm, TerceroOrm } from '@orm/seguridad';
 import {
   ESTADO_USUARIO,
   estadoUsuarioTypeFactory,
@@ -21,8 +21,9 @@ export class UsuarioCrudSource extends BaseSource {
       where: documento
         ? { documento, empresas: { codigo: this.auth.enterpriseCode } }
         : { empresas: { codigo: this.auth.enterpriseCode } },
-      relations: { rol: true },
+      relations: { rol: true, terceros: true },
     });
+
     if (documento && isUpdatingUsers && usuarios.length) {
       if (this.auth.id === usuarios[0].id) throw new Error('No puede modificar su propio usuario');
     }
@@ -40,6 +41,7 @@ export class UsuarioCrudSource extends BaseSource {
       await this.verifyEntityExist('GENROL', rolIdDcd);
 
       const usuarioRp = this.qr.manager.getRepository(UsuarioOrm);
+      const terceroRp = this.qr.manager.getRepository(TerceroOrm);
 
       if (body.documento) {
         const usuarioWithSameDocumento = await usuarioRp.findOne({
@@ -69,6 +71,12 @@ export class UsuarioCrudSource extends BaseSource {
       newUsuario.password = await CRYPTO_SERVICES.encrypt('123');
       newUsuario.isPasswordReiniciada = true;
       newUsuario.estadoCode = ESTADO_USUARIO.ACTIVO.getCode();
+      if (body.terceroId || this.auth.terceroId) {
+        const tercero = await terceroRp.findOne({
+          where: { id: this.auth.terceroId ? this.auth.terceroId : body.terceroId },
+        });
+        newUsuario.terceros = [tercero!];
+      }
 
       const stored = await usuarioRp.save(newUsuario);
 
@@ -103,6 +111,7 @@ export class UsuarioCrudSource extends BaseSource {
       }
 
       const usuarioRp = this.qr.manager.getRepository(UsuarioOrm);
+      const terceroRp = this.qr.manager.getRepository(TerceroOrm);
       const tokenRp = this.qr.manager.getRepository(TokenOrm);
 
       const usuario = await usuarioRp.findOne({
@@ -154,6 +163,11 @@ export class UsuarioCrudSource extends BaseSource {
       }
       if (body.email !== undefined) {
         usuario!.email = SU.lowerCaseAndTrim(body.email);
+      }
+
+      if (body.terceroId && !this.auth.terceroId) {
+        const tercero = await terceroRp.findOne({ where: { id: body.terceroId } });
+        usuario!.terceros = [tercero!];
       }
 
       if (token && estadoCode !== ESTADO_USUARIO.ACTIVO.getCode()) {
