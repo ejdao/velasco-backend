@@ -6,11 +6,11 @@ export class CategoriaProductoOrm {
   @PrimaryGeneratedColumn({ name: 'ID', type: 'smallint' })
   id!: number;
 
-  @Column({ name: 'NOMBRE', length: 100, unique: true })
-  nombre!: string;
+  @Column({ name: 'CODIGO', length: 10, unique: true })
+  codigo!: string;
 
-  @Column({ name: 'DESCRIPCION', length: 500, nullable: true })
-  descripcion!: string;
+  @Column({ name: 'NOMBRE', length: 100 })
+  nombre!: string;
 
   @OneToMany(() => ProductoOrm, producto => producto.categoria)
   productos!: ProductoOrm[];
