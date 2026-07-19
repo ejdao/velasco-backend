@@ -31,7 +31,10 @@ export class ClientesCrudSource extends BaseSource {
       }
     });
 
-    const terceros = await terceroRp.find({ where: { id: In(uniq(terceroIds)) } });
+    const terceros = await terceroRp.find({
+      where: { id: In(uniq(terceroIds)) },
+      relations: { usuarios: true },
+    });
 
     const municipios = await municipioRp.find({
       where: { id: In(uniq(terceros.map(t => t.municipioId))) },
@@ -39,18 +42,9 @@ export class ClientesCrudSource extends BaseSource {
 
     terceros.map(t => {
       t.municipio = municipios.find(m => m.id === t.municipioId)!;
-      const usuarioIds = [0];
-      usuarios.forEach(u => {
-        if (u.terceros) {
-          u.terceros.forEach(ut => {
-            if (ut.id === t.id) usuarioIds.push(u.id);
-          });
-        }
-      });
-      t.usuarios = usuarios.filter(u => new Set(usuarioIds).has(u.id));
     });
 
-    return terceros.map(cliente => terceroOrmToFetchClienteResFactory(cliente));
+    return terceros.map(tercero => terceroOrmToFetchClienteResFactory(tercero));
   }
 
   public async create(body: CreateClienteDto): Promise<boolean> {

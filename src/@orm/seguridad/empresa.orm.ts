@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany } from 'typeorm';
 import { UsuarioOrm } from './usuario.orm';
 
 @Entity('GENEMPRESA')
@@ -12,6 +12,6 @@ export class EmpresaOrm {
   @Column({ name: 'NOMBRE', length: 100 })
   nombre!: string;
 
-  @OneToMany(() => UsuarioOrm, usuario => usuario.empresas)
+  @ManyToMany(() => UsuarioOrm, usuario => usuario.empresas)
   usuarios!: UsuarioOrm[];
 }

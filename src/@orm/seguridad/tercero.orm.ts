@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import type { EstadoUsuarioCode } from '@ctypes/general/usuario';
 import type { TipoTerceroCode } from '@ctypes/general/tercero';
 import { MunicipioOrm } from '@orm/shared/ubicacion';
@@ -28,7 +28,7 @@ export class TerceroOrm {
   @Column({ name: 'ESTADO', type: 'smallint' })
   estadoCode!: EstadoUsuarioCode;
 
-  @OneToMany(() => UsuarioOrm, usuario => usuario.terceros)
+  @ManyToMany(() => UsuarioOrm, usuario => usuario.terceros)
   usuarios!: UsuarioOrm[];
 
   @OneToMany(() => ObraOrm, obra => obra.tercero)
