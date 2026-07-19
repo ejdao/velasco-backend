@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ObrasCrudSource } from './infrastructure/repositories';
-import { ObrasController } from './presentation/controllers';
+import { ObrasCrudSource, ProductosCrudSource } from './infrastructure/repositories';
+import { ObrasController, ProductosController } from './presentation/controllers';
 
 @Module({
-  controllers: [ObrasController],
-  providers: [ObrasCrudSource],
+  controllers: [ObrasController, ProductosController],
+  providers: [ObrasCrudSource, ProductosCrudSource],
 })
 export class AlquilerMaquinariaModule {}
