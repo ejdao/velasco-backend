@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { SeguridadModule } from '@seg/module';
 import { SRD_MODULES } from '@shared/module';
-import { AlquilerMaquinariaModule } from './apps/alquiler-maquinaria/module';
+import { AlquMaquModule } from './apps/alquiler-maquinaria/module';
 
 const title = 'Velasco App';
 
@@ -15,13 +15,8 @@ interface ConfigI {
 }
 
 const config: ConfigI[] = [
+  { name: 'Alqu. Maquinaria', url: 'docs/alqu-maqui', version: '1.0', modules: [AlquMaquModule] },
   { name: 'General', url: 'docs/general', version: '1.0', modules: [GeneralModule] },
-  {
-    name: 'Alquiler Maquinaria',
-    url: 'docs/alquiler-maquinaria',
-    version: '1.0',
-    modules: [AlquilerMaquinariaModule],
-  },
   { name: 'Seguridad', url: 'docs/seguridad', version: '1.0', modules: [SeguridadModule] },
   { name: 'Shared', url: 'docs/shared', version: '1.0', modules: SRD_MODULES },
 ];

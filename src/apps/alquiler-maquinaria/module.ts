@@ -7,4 +7,4 @@ import { RecursosController } from './presentation/controllers';
   controllers: [ObrasController, ProductosController, RecursosController],
   providers: [ObrasCrudSource, ProductosCrudSource],
 })
-export class AlquilerMaquinariaModule {}
+export class AlquMaquModule {}

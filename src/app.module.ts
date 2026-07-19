@@ -3,10 +3,10 @@ import { DATASOURCES } from './app.connections';
 import { SeguridadModule } from '@seg/module';
 import { SharedModule } from '@shared/module';
 import { GeneralModule } from '@general/module';
-import { AlquilerMaquinariaModule } from './apps/alquiler-maquinaria/module';
+import { AlquMaquModule } from './apps/alquiler-maquinaria/module';
 
 @Module({
-  imports: [SeguridadModule, GeneralModule, AlquilerMaquinariaModule, SharedModule],
+  imports: [SeguridadModule, GeneralModule, AlquMaquModule, SharedModule],
 })
 export class AppModule implements OnModuleInit {
   async onModuleInit() {

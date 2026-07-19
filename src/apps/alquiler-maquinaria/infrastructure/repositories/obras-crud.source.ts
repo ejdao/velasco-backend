@@ -17,23 +17,22 @@ export class ObrasCrudSource extends BaseSource {
       await this.ensureTerceroEmpresa(body.terceroId);
       await this.ensureMunicipio(body.municipioId);
 
-      const responsableId = this.decodeUsuarioId(body.responsableId, 'responsable');
-      const vendedorId = this.decodeUsuarioId(body.vendedorId, 'vendedor');
-
-      await this.ensureUsuarioEmpresa(responsableId, 'responsable');
-      await this.ensureUsuarioEmpresa(vendedorId, 'vendedor');
-
       const obraRp = this.qr.manager.getRepository(ObraOrm);
+      const terceroRp = this.qr.manager.getRepository(TerceroOrm);
+
+      const tercero = await terceroRp.findOne({
+        where: { id: body.terceroId },
+        relations: { usuarios: true },
+      });
+
       const obra = new ObraOrm();
       obra.nombre = STRING_UTILITIES.trim(body.nombre);
       obra.terceroId = body.terceroId;
       obra.municipioId = body.municipioId;
       obra.direccion = STRING_UTILITIES.trim(body.direccion);
-      obra.responsableId = responsableId;
-      obra.vendedorId = vendedorId;
-      obra.estadoCode = estadoObraTypeFactory(
-        body.estadoCode ?? ESTADO_OBRA.PLANEADA.getCode()
-      ).getCode();
+      obra.responsableId = tercero!.usuarios[0].id;
+      obra.vendedorId = this.auth.id;
+      obra.estadoCode = ESTADO_OBRA.ACTIVA.getCode();
       obra.notas = STRING_UTILITIES.trim(body.notas);
 
       await obraRp.save(obra);
@@ -72,22 +71,6 @@ export class ObrasCrudSource extends BaseSource {
         obra.municipioId = body.municipioId;
       }
 
-      if (body.responsableId !== undefined) {
-        const responsableId = this.decodeUsuarioId(body.responsableId, 'responsable');
-        await this.ensureUsuarioEmpresa(responsableId, 'responsable');
-        obra.responsableId = responsableId;
-      }
-
-      if (body.vendedorId !== undefined) {
-        const vendedorId = this.decodeUsuarioId(body.vendedorId, 'vendedor');
-        await this.ensureUsuarioEmpresa(vendedorId, 'vendedor');
-        obra.vendedorId = vendedorId;
-      }
-
-      if (body.estadoCode !== undefined) {
-        obra.estadoCode = estadoObraTypeFactory(body.estadoCode).getCode();
-      }
-
       if (body.nombre !== undefined) obra.nombre = STRING_UTILITIES.trim(body.nombre);
       if (body.direccion !== undefined) obra.direccion = STRING_UTILITIES.trim(body.direccion);
       if (body.notas !== undefined) obra.notas = STRING_UTILITIES.trim(body.notas);
@@ -104,10 +87,6 @@ export class ObrasCrudSource extends BaseSource {
     }
   }
 
-  private decodeUsuarioId(id: string, label: string): number {
-    return this.decodeId(id, label);
-  }
-
   private decodeId(id: string, label: string): number {
     const decodedId = +RSA_SERVICES.decryptValue(id);
     if (!decodedId) throw new Error(`El id de ${label} no es valido`);
@@ -118,15 +97,6 @@ export class ObrasCrudSource extends BaseSource {
     const municipioRp = this.sharedConn.getRepository(MunicipioOrm);
     const municipio = await municipioRp.findOne({ where: { id: municipioId } });
     if (!municipio) throw new Error('No existe un municipio con este id');
-  }
-
-  private async ensureUsuarioEmpresa(usuarioId: number, label: string): Promise<void> {
-    const usuarioRp = this.qr.manager.getRepository(UsuarioOrm);
-    const usuario = await usuarioRp.findOne({
-      where: { id: usuarioId, empresas: { codigo: this.auth.enterpriseCode } },
-    });
-
-    if (!usuario) throw new Error(`No existe un usuario ${label} con este id`);
   }
 
   private async ensureTerceroEmpresa(terceroId: number): Promise<void> {
