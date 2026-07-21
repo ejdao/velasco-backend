@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import type { EstadoUsuarioCode } from '@ctypes/general/usuario';
-import type { TipoTerceroCode } from '@ctypes/general/tercero';
+import type { TipoPersonaTerceroCode, TipoTerceroCode } from '@ctypes/general/tercero';
 import { MunicipioOrm } from '@orm/shared/ubicacion';
 import { ObraOrm, ProductoStockOrm } from '@orm/alquiler-maquinaria';
 import { UsuarioOrm } from './usuario.orm';
@@ -10,8 +10,11 @@ export class TerceroOrm {
   @PrimaryGeneratedColumn({ name: 'ID', type: 'int' })
   id!: number;
 
-  @Column({ name: 'TIPOPER', type: 'smallint' })
+  @Column({ name: 'TIPOTER', type: 'smallint' })
   tipoCode!: TipoTerceroCode;
+
+  @Column({ name: 'TIPOPER', type: 'smallint' })
+  tipoPersonaCode!: TipoPersonaTerceroCode;
 
   @Column({ name: 'NIT', length: 20, unique: true })
   nit!: string;

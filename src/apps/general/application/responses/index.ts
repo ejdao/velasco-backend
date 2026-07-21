@@ -1,1 +1,1 @@
-export * from './cliente.res';
+export * from './tercero.res';

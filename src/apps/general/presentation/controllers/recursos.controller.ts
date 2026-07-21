@@ -1,7 +1,12 @@
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { CommonGuards } from '@common/presentation/decorators';
 import { BadRequestException, Controller, Get, Query } from '@nestjs/common';
-import { TIPOS_TERCERO_VALUES, TipoTerceroType } from '@ctypes/general/tercero';
+import {
+  TIPOS_PERSONA_TERCERO_VALUES,
+  TIPOS_TERCERO_VALUES,
+  TipoPersonaTerceroType,
+  TipoTerceroType,
+} from '@ctypes/general/tercero';
 import { CtmTypeRes } from '@common/domain/types';
 import { RecursoRes } from '@shared/common';
 import { RecursosSource } from '@general/infrastructure/repositories';
@@ -13,8 +18,18 @@ export class RecursosController {
   constructor(private readonly _source: RecursosSource) {}
 
   @ApiOkResponse({ type: CtmTypeRes, isArray: true })
-  @Get('cliente/tipos')
-  public async tiposCliente(): Promise<TipoTerceroType[]> {
+  @Get('terceros/tipos-entidad')
+  public async tiposPersonaTercero(): Promise<TipoPersonaTerceroType[]> {
+    try {
+      return TIPOS_PERSONA_TERCERO_VALUES;
+    } catch (error: any) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  @ApiOkResponse({ type: CtmTypeRes, isArray: true })
+  @Get('terceros/tipos')
+  public async tiposTercero(): Promise<TipoTerceroType[]> {
     try {
       return TIPOS_TERCERO_VALUES;
     } catch (error: any) {

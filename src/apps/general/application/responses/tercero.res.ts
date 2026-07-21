@@ -2,7 +2,7 @@ import { CtmTypeRes } from '@common/domain/types';
 import { ApiProperty } from '@nestjs/swagger';
 import { RecursoRes } from '@shared/common';
 
-class ResponsableClienteRes {
+class ResponsableTerceroRes {
   @ApiProperty()
   id!: number;
 
@@ -31,7 +31,7 @@ class ResponsableClienteRes {
   telefono2!: string;
 }
 
-export class FetchClienteRes {
+export class FetchTerceroRes {
   @ApiProperty()
   id!: number;
 
@@ -48,11 +48,14 @@ export class FetchClienteRes {
   estado!: CtmTypeRes;
 
   @ApiProperty({ type: CtmTypeRes })
+  tipo!: CtmTypeRes;
+
+  @ApiProperty({ type: CtmTypeRes })
   tipoPersona!: CtmTypeRes;
 
   @ApiProperty({ type: RecursoRes })
   municipio!: RecursoRes;
 
-  @ApiProperty({ type: ResponsableClienteRes, isArray: true })
-  responsables!: ResponsableClienteRes[];
+  @ApiProperty({ type: ResponsableTerceroRes, isArray: true })
+  responsables!: ResponsableTerceroRes[];
 }
