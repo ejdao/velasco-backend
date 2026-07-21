@@ -1,17 +1,17 @@
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CommonGuards } from '@common/presentation/decorators';
 import { ESTADO_OBRA_VALUES, EstadoObraType } from '@ctypes/general/obra';
+import {
+  CATEGORIA_PRODUCTO_VALUES,
+  CategoriaProductoType,
+} from '@ctypes/alquiler-maquinaria/producto';
 import { BadRequestException, Controller, Get } from '@nestjs/common';
 import { CtmTypeRes } from '@common/domain/types';
-import { RecursoRes } from '@shared/common';
-import { RecursosSource } from '../../infrastructure/repositories';
 
 @ApiTags('V1 | Recursos')
 @CommonGuards()
 @Controller('v1/alquiler-maquinaria/recursos')
 export class RecursosController {
-  constructor(private readonly _source: RecursosSource) {}
-
   @ApiOkResponse({ type: CtmTypeRes, isArray: true })
   @Get('obras/tipos')
   public async estadosObra(): Promise<EstadoObraType[]> {
@@ -22,11 +22,11 @@ export class RecursosController {
     }
   }
 
-  @ApiOkResponse({ type: RecursoRes, isArray: true })
+  @ApiOkResponse({ type: CtmTypeRes, isArray: true })
   @Get('productos/categorias')
-  public async categoriasProducto(): Promise<RecursoRes[]> {
+  public async categoriasProducto(): Promise<CategoriaProductoType[]> {
     try {
-      return await this._source.fetchCategoriasProducto();
+      return CATEGORIA_PRODUCTO_VALUES;
     } catch (error: any) {
       throw new BadRequestException(error.message);
     }

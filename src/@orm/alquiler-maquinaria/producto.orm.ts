@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { CategoriaProductoOrm } from './producto-categoria.orm';
+import type { CategoriaProductoCode } from '@ctypes/alquiler-maquinaria/producto';
 import { TarifaProductoOrm } from './producto-tarifa.orm';
 import { ProductoStockOrm } from './producto-stock.orm';
 
@@ -18,11 +18,7 @@ export class ProductoOrm {
   descripcion!: string;
 
   @Column({ name: 'ALQMAQPRODCATEGORIA', type: 'smallint' })
-  categoriaId!: number;
-
-  @ManyToOne(() => CategoriaProductoOrm, categoria => categoria.productos)
-  @JoinColumn({ name: 'ALQMAQPRODCATEGORIA' })
-  categoria!: CategoriaProductoOrm;
+  categoriaCode!: CategoriaProductoCode;
 
   @Column({ name: 'ALQMAQPRODTARIFA', type: 'int', nullable: true })
   tarifaActualId!: number;

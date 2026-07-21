@@ -1,5 +1,9 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  CATEGORIA_PRODUCTO,
+  type CategoriaProductoCode,
+} from '@ctypes/alquiler-maquinaria/producto';
 
 export class CreateProductoDto {
   @ApiProperty()
@@ -15,9 +19,9 @@ export class CreateProductoDto {
   @IsOptional()
   descripcion!: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: CATEGORIA_PRODUCTO.ESTRUCTURAS.getCode() })
   @IsNumber()
-  categoriaId!: number;
+  categoriaCode!: CategoriaProductoCode;
 
   @ApiProperty({ example: 0, required: false })
   @IsNumber()

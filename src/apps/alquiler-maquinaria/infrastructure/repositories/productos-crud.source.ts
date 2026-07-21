@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { categoriaProductoTypeFactory } from '@ctypes/alquiler-maquinaria/producto';
 import { RSA_SERVICES, STRING_UTILITIES } from '@common/application/services';
 import { BaseSource } from '@common/infrastructure/services';
-import { CategoriaProductoOrm, ProductoOrm, TarifaProductoOrm } from '@orm/alquiler-maquinaria';
-import { Not } from 'typeorm';
+import { ProductoOrm, TarifaProductoOrm } from '@orm/alquiler-maquinaria';
 import { CreateProductoDto, UpdateProductoDto } from '../../application/dtos';
+import { Not } from 'typeorm';
 
 @Injectable()
 export class ProductosCrudSource extends BaseSource {
@@ -15,14 +16,14 @@ export class ProductosCrudSource extends BaseSource {
       const productoRp = this.qr.manager.getRepository(ProductoOrm);
       const codigo = STRING_UTILITIES.upperCaseAndTrim(body.codigo);
 
-      await this.ensureCategoria(body.categoriaId);
+      this.ensureCategoria(body.categoriaCode);
       await this.ensureCodigoDisponible(codigo);
 
       const producto = new ProductoOrm();
       producto.codigo = codigo;
       producto.nombre = STRING_UTILITIES.trim(body.nombre);
       producto.descripcion = STRING_UTILITIES.trim(body.descripcion);
-      producto.categoriaId = body.categoriaId;
+      producto.categoriaCode = body.categoriaCode;
       producto.tarifaActualId = null as any;
 
       const stored = await productoRp.save(producto);
@@ -59,9 +60,9 @@ export class ProductosCrudSource extends BaseSource {
         producto.codigo = codigo;
       }
 
-      if (body.categoriaId !== undefined) {
-        await this.ensureCategoria(body.categoriaId);
-        producto.categoriaId = body.categoriaId;
+      if (body.categoriaCode !== undefined) {
+        this.ensureCategoria(body.categoriaCode);
+        producto.categoriaCode = body.categoriaCode;
       }
 
       if (body.nombre !== undefined) producto.nombre = STRING_UTILITIES.trim(body.nombre);
@@ -92,11 +93,8 @@ export class ProductosCrudSource extends BaseSource {
     return decodedId;
   }
 
-  private async ensureCategoria(categoriaId: number): Promise<void> {
-    const categoriaRp = this.qr.manager.getRepository(CategoriaProductoOrm);
-    const categoria = await categoriaRp.findOne({ where: { id: categoriaId } });
-
-    if (!categoria) throw new Error('No existe una categoria de producto con este id');
+  private ensureCategoria(categoriaCode: number): void {
+    categoriaProductoTypeFactory(categoriaCode as any);
   }
 
   private async ensureCodigoDisponible(codigo: string, productoId?: number): Promise<void> {
