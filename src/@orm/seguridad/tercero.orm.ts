@@ -16,8 +16,8 @@ export class TerceroOrm {
   @Column({ name: 'TIPOPER', type: 'smallint' })
   tipoPersonaCode!: TipoPersonaTerceroCode;
 
-  @Column({ name: 'NIT', length: 20, unique: true })
-  nit!: string;
+  @Column({ name: 'DOCUMENTO', length: 20, unique: true })
+  documento!: string;
 
   @Column({ name: 'NOMBRE', length: 150 })
   nombre!: string;

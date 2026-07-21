@@ -1,4 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { CtmTypeRes } from '@common/domain/types';
+import { RecursoRes } from '@shared/common';
 
 export class LoginRes {
   @ApiProperty()
@@ -22,4 +24,27 @@ export class MyAuthDataRes {
 
   @ApiProperty()
   permisos!: string[];
+}
+
+export class MyEmpresaRes {
+  @ApiProperty()
+  id!: number;
+
+  @ApiProperty()
+  codigo!: string;
+
+  @ApiProperty()
+  documento!: string;
+
+  @ApiProperty({ type: CtmTypeRes })
+  tipo!: CtmTypeRes;
+
+  @ApiProperty()
+  nombre!: string;
+
+  @ApiProperty({ type: RecursoRes })
+  municipio!: RecursoRes;
+
+  @ApiProperty()
+  direccion!: string;
 }

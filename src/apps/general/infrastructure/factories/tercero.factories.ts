@@ -6,7 +6,7 @@ import { entidadOrmToRecursoRes } from '@shared/common';
 
 export const terceroOrmToFetchTerceroResFactory = (data: TerceroOrm): FetchTerceroRes => ({
   id: data.id,
-  nit: data.nit,
+  nit: data.documento,
   nombre: data.nombre,
   direccion: data.direccion,
   municipio: entidadOrmToRecursoRes(data.municipio, false),

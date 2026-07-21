@@ -57,11 +57,11 @@ export class TercerosCrudSource extends BaseSource {
       const terceroRp = this.conn.getRepository(TerceroOrm);
       const tipoCode = tipoTerceroTypeFactory(body.tipoCode).getCode();
 
-      const existing = await terceroRp.findOne({ where: { nit: body.nit } });
+      const existing = await terceroRp.findOne({ where: { documento: body.nit } });
       if (existing) throw new Error('Ya existe un tercero con este NIT');
 
       const tercero = new TerceroOrm();
-      tercero.nit = body.nit;
+      tercero.documento = body.nit;
       tercero.nombre = body.nombre;
       tercero.direccion = body.direccion;
       tercero.tipoCode = tipoCode;

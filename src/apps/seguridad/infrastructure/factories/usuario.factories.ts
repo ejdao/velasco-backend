@@ -30,7 +30,7 @@ export const usuarioOrmToUsuarioResFactory = (data: UsuarioOrm): FetchUsuarioRes
   usuario.tipoDocumento = tipoDocUsuarioTypeFactory(data.tipoDocumentoCode) as any;
   usuario.terceros = (data.terceros ?? []).map(tercero => ({
     id: tercero.id,
-    nit: tercero.nit,
+    nit: tercero.documento,
     nombre: tercero.nombre,
     direccion: tercero.direccion,
   }));

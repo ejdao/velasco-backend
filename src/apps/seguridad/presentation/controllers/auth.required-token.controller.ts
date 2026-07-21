@@ -1,7 +1,7 @@
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { BadRequestException, Controller, Get, Param, Query } from '@nestjs/common';
 import { AuthServicesImpl } from '@seg/infrastructure/services';
-import { MyAuthDataRes } from '@seg/application/responses';
+import { MyAuthDataRes, MyEmpresaRes } from '@seg/application/responses';
 import { CommonGuards } from '@common/presentation/decorators';
 
 @ApiTags('V1 | Autenticación')
@@ -39,6 +39,16 @@ export class AuthTkRqController {
   public async data(): Promise<MyAuthDataRes> {
     try {
       return await this._services.data();
+    } catch (error: any) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  @ApiOkResponse({ type: MyEmpresaRes })
+  @Get('empresa')
+  public async empresa(): Promise<MyEmpresaRes> {
+    try {
+      return await this._services.empresa();
     } catch (error: any) {
       throw new BadRequestException(error.message);
     }

@@ -26,7 +26,7 @@ export class RecursosSource extends BaseSource {
     const terceros = await terceroRp.find({
       where: pattern
         ? [
-            { id: In(terceroIdsUnicos), nit: TYPE_ORM_UTILITIES.like(pattern) },
+            { id: In(terceroIdsUnicos), documento: TYPE_ORM_UTILITIES.like(pattern) },
             { id: In(terceroIdsUnicos), nombre: TYPE_ORM_UTILITIES.like(pattern) },
           ]
         : { id: In(terceroIdsUnicos) },

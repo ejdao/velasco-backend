@@ -1,8 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CRYPTO_SERVICES, JWT_SERVICES } from '@common/application/services';
-import { MyAuthDataRes } from '@seg/application/responses';
+import { MyAuthDataRes, MyEmpresaRes } from '@seg/application/responses';
 import { BaseSource } from '@common/infrastructure/services';
 import { TokenOrm, UsuarioOrm } from '@orm/seguridad';
+import { tipoTerceroTypeFactory } from '@ctypes/general/tercero';
+import { MunicipioOrm } from '@orm/shared/ubicacion';
+import { entidadOrmToRecursoRes } from '@shared/common';
 
 @Injectable()
 export class AuthServicesImpl extends BaseSource {
@@ -101,6 +104,26 @@ export class AuthServicesImpl extends BaseSource {
       usuario!.primerApellido
     }${usuario!.segundoApellido ? ' ' + usuario!.segundoApellido : ''}`;
     result.permisos = permisos.onlyCodigos;
+
+    return result;
+  }
+
+  public async empresa(): Promise<MyEmpresaRes> {
+    const empresa = await this.getEnterprise();
+
+    if (!empresa) throw new Error('No existe la empresa autenticada');
+
+    const municipioRp = this.sharedConn.getRepository(MunicipioOrm);
+    const municipio = await municipioRp.findOne({ where: { id: empresa.municipioId } });
+
+    const result = new MyEmpresaRes();
+    result.id = empresa.id;
+    result.codigo = empresa.codigo;
+    result.documento = empresa.documento;
+    result.tipo = tipoTerceroTypeFactory(empresa.tipoCode) as any;
+    result.nombre = empresa.nombre;
+    result.municipio = entidadOrmToRecursoRes(municipio, false);
+    result.direccion = empresa.direccion;
 
     return result;
   }
