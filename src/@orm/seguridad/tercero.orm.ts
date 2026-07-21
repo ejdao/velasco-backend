@@ -2,7 +2,7 @@ import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 't
 import type { EstadoUsuarioCode } from '@ctypes/general/usuario';
 import type { TipoTerceroCode } from '@ctypes/general/tercero';
 import { MunicipioOrm } from '@orm/shared/ubicacion';
-import { ObraOrm } from '@orm/alquiler-maquinaria';
+import { ObraOrm, ProductoStockOrm } from '@orm/alquiler-maquinaria';
 import { UsuarioOrm } from './usuario.orm';
 
 @Entity('GENTERCERO')
@@ -33,6 +33,9 @@ export class TerceroOrm {
 
   @OneToMany(() => ObraOrm, obra => obra.tercero)
   obras!: ObraOrm[];
+
+  @OneToMany(() => ProductoStockOrm, stock => stock.proveedor)
+  stocks!: ProductoStockOrm[];
 
   municipio!: MunicipioOrm;
 }
