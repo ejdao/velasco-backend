@@ -1,5 +1,5 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString, Min } from 'class-validator';
 import {
   CATEGORIA_PRODUCTO,
   type CategoriaProductoCode,
@@ -30,3 +30,14 @@ export class CreateProductoDto {
 }
 
 export class UpdateProductoDto extends PartialType(CreateProductoDto) {}
+
+export class AddProductoStockDto {
+  @ApiProperty()
+  @IsNumber()
+  productoId!: number;
+
+  @ApiProperty()
+  @IsNumber()
+  @Min(1)
+  cantidad!: number;
+}

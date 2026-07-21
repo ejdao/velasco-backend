@@ -1,10 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ObrasCrudSource, ProductosCrudSource } from './infrastructure/repositories';
-import { ObrasController, ProductosController } from './presentation/controllers';
+import {
+  ObrasController,
+  ProductosController,
+  ProductosStockController,
+} from './presentation/controllers';
 import { RecursosController } from './presentation/controllers';
+import { AddStockToProductoImpl } from './infrastructure/services';
 
 @Module({
-  controllers: [ObrasController, ProductosController, RecursosController],
-  providers: [ObrasCrudSource, ProductosCrudSource],
+  controllers: [ObrasController, ProductosController, ProductosStockController, RecursosController],
+  providers: [ObrasCrudSource, ProductosCrudSource, AddStockToProductoImpl],
 })
 export class AlquMaquModule {}
