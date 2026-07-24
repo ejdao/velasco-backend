@@ -1,5 +1,4 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { ItemAlquilerOrm } from './producto-alquiler.orm';
 import { AlquilerOrm } from './alquiler.orm';
 
 @Entity('ALQMAQPRODALQUICORT')
@@ -17,6 +16,9 @@ export class AlquilerCorteOrm {
   @Column({ name: 'FECHAINICIO' })
   fechaInicio!: Date;
 
-  @Column({ name: 'FECHAFIN' })
+  @Column({ name: 'FECHAFIN', nullable: true })
   fechaFin!: Date;
+
+  @Column({ name: 'TOTALFACTU', type: 'numeric', precision: 14, scale: 2 })
+  totalFacturado!: number;
 }

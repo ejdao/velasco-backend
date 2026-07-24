@@ -18,7 +18,7 @@ export class AlquilerOrm {
   @Column({ name: 'FECHAINICIO' })
   fechaInicio!: Date;
 
-  @Column({ name: 'FECHAFIN' })
+  @Column({ name: 'FECHAFIN', nullable: true })
   fechaFin!: Date;
 
   @OneToMany(() => AlquilerCorteOrm, corte => corte.alquiler)

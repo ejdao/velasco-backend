@@ -1,8 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  ESTADO_PRODUCTO,
-  categoriaProductoTypeFactory,
-} from '@ctypes/alquiler-maquinaria/producto';
+import { categoriaProductoTypeFactory } from '@ctypes/alquiler-maquinaria/producto';
 import { TIPOS_TERCERO } from '@ctypes/general/tercero';
 import { RSA_SERVICES } from '@common/application/services';
 import { TRANSACTIONS } from '@common/application/transactions';
@@ -55,7 +52,6 @@ export class AddStockToProductoImpl extends BaseSource {
 
       stock.stockOriginal = (stock.stockOriginal ?? 0) + body.cantidad;
       stock.stockDisponible = (stock.stockDisponible ?? 0) + body.cantidad;
-      stock.estadoCode = ESTADO_PRODUCTO.DISPONIBLE.getCode();
 
       const stored = await stockRp.save(stock);
 
