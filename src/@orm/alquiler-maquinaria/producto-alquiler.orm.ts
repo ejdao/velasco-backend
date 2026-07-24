@@ -24,12 +24,6 @@ export class ItemAlquilerOrm {
   @Column({ name: 'CANTIDAD', type: 'int' })
   cantidad!: number;
 
-  @Column({ name: 'FECHAENTREGA', nullable: true })
-  fechaEntrega!: Date;
-
-  @Column({ name: 'FECHADEVOLUCION', nullable: true })
-  fechaDevolucion!: Date;
-
   @Column({ name: 'VALORTARIFA', type: 'numeric', precision: 14, scale: 2 })
   valorTarifa!: number;
 }

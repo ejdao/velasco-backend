@@ -7,7 +7,11 @@ import {
   ProductosStockController,
 } from './presentation/controllers';
 import { RecursosController } from './presentation/controllers';
-import { AddStockToProductoImpl, RegistrarAlquilerImpl } from './infrastructure/services';
+import {
+  AddStockToProductoImpl,
+  RegistrarAlquilerImpl,
+  RegistrarCorteAlquilerImpl,
+} from './infrastructure/services';
 
 @Module({
   controllers: [
@@ -17,6 +21,12 @@ import { AddStockToProductoImpl, RegistrarAlquilerImpl } from './infrastructure/
     ProductosStockController,
     RecursosController,
   ],
-  providers: [ObrasCrudSource, ProductosCrudSource, AddStockToProductoImpl, RegistrarAlquilerImpl],
+  providers: [
+    ObrasCrudSource,
+    ProductosCrudSource,
+    AddStockToProductoImpl,
+    RegistrarAlquilerImpl,
+    RegistrarCorteAlquilerImpl,
+  ],
 })
 export class AlquMaquModule {}

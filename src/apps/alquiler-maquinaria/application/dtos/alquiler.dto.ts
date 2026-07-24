@@ -3,8 +3,12 @@ import { Type } from 'class-transformer';
 import {
   ArrayMinSize,
   IsArray,
+  IsBoolean,
   IsDateString,
   IsNumber,
+  IsOptional,
+  IsString,
+  MaxLength,
   Min,
   ValidateNested,
 } from 'class-validator';
@@ -40,4 +44,20 @@ export class CreateAlquilerDto {
   @ValidateNested({ each: true })
   @Type(() => CreateAlquilerItemDto)
   detalle!: CreateAlquilerItemDto[];
+}
+
+export class CreateAlquilerCorteDto {
+  @ApiProperty()
+  @IsDateString()
+  fechaCorte!: string;
+
+  @ApiProperty()
+  @IsBoolean()
+  isUltimoCorte!: boolean;
+
+  @ApiProperty({ required: false, maxLength: 500 })
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  observacion?: string;
 }

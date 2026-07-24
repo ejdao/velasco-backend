@@ -52,7 +52,6 @@ export class RegistrarAlquilerImpl extends BaseSource {
         item.alquilerId = storedAlquiler.id;
         item.stockId = stock.id;
         item.cantidad = itemBody.cantidad;
-        item.fechaEntrega = storedAlquiler.fechaInicio;
         item.valorTarifa = itemBody.tarifa;
 
         await itemRp.save(item);

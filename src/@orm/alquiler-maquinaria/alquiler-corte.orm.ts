@@ -21,4 +21,7 @@ export class AlquilerCorteOrm {
 
   @Column({ name: 'TOTALFACTU', type: 'numeric', precision: 14, scale: 2 })
   totalFacturado!: number;
+
+  @Column({ name: 'OBSERVACION', type: 'varchar', length: 500, nullable: true })
+  observacion!: string;
 }
