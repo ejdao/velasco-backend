@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import type { EstadoObraCode } from '@ctypes/general/obra';
 import { TerceroOrm, UsuarioOrm } from '@orm/seguridad';
+import { AlquilerOrm } from './alquiler.orm';
 
 @Entity('ALQMAQOBRA')
 export class ObraOrm {
@@ -42,4 +43,7 @@ export class ObraOrm {
 
   @Column({ name: 'NOTAS', length: 500, nullable: true })
   notas!: string;
+
+  @OneToMany(() => AlquilerOrm, alquiler => alquiler.obra)
+  alquileres!: AlquilerOrm[];
 }

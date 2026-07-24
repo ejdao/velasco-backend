@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import type { EstadoProductoCode } from '@ctypes/alquiler-maquinaria/producto';
 import { ProductoOrm } from './producto.orm';
 import { TerceroOrm } from '@orm/seguridad';
+import { ItemAlquilerOrm } from './producto-alquiler.orm';
 
 @Entity('ALQMAQPRODSTOCK')
 export class ProductoStockOrm {
@@ -42,4 +43,7 @@ export class ProductoStockOrm {
 
   @Column({ name: 'ESTADO', type: 'smallint' })
   estadoCode!: EstadoProductoCode;
+
+  @OneToMany(() => ItemAlquilerOrm, alquiler => alquiler.stock)
+  alquileres!: ItemAlquilerOrm[];
 }
